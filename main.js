@@ -56,28 +56,8 @@ function gamestart() {
     drawImg("bug", "img/bug.png",10);
     drawImg("carrot", "img/carrot.png",10);
 
-    // 벌레 & 당근 클릭 수에 맞춰서 Score를 나타낼거야
-    // 그리고 클릭하면 사라지게 할거야!
-    setScore(score);
-
     // 타이머가 가게 할거고 0이되면 모든 동작 멈추고 GameOver 동작
     let i = 10;
-    timer.innerHTML = `0:${i}`;
-    i--;
-    const timerFunc = setInterval(()=>{
-        timer.innerHTML = `0:0${i}`;
-        i--;    
-        // 타임아웃시?
-        if (i < 0 ) { clearInterval(timerFunc); 
-            //동작 멈추는 함수
-            gameoverFunc();
-        }
-    },1000);
-    
-}
-
-// 타이머 함수
-function TimerSet(i) {
     timer.innerHTML = `0:${i}`;
     i--;
     const timerFunc = setInterval(()=>{
@@ -89,17 +69,29 @@ function TimerSet(i) {
             gameoverFunc();
         }
     },1000);
+    // 벌레 & 당근 클릭 수에 맞춰서 Score를 나타낼거야
+    // 그리고 클릭하면 사라지게 할거야!
+    setScore(score, timerFunc);
+
+    
 }
 
-function setScore(score) {
+
+// 점수 함수
+function setScore(score, func) {
     document.addEventListener('click',(e)=>{
         if(e.target.tagName == 'IMG'){
             if (e.target.className == 'bug') {
                 gameoverFunc();
+                clearInterval(func);
             } else {
                 e.target.classList.add('hide');
                 score++;
                 scoremsg.innerHTML = score;
+                if(score == 10) {
+                    clearInterval(func);
+                    gameClear();
+                }
             }
         }
     });
@@ -121,7 +113,4 @@ function gameClear(){
     gameclear.classList.remove('hide');
 }
 
-// 일시정지
-function gamePause(){
-
-}
+//일시정지
