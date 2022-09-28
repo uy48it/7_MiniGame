@@ -70,9 +70,8 @@ header.state {
     display: none;
 }
 
-.gameover,
-.start,
-.gameclear
+.gamemsg,
+.start
 {
     background-color: #00000090;
     position: absolute;
