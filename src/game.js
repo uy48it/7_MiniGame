@@ -4,18 +4,27 @@ export default class Game{
     constructor(PopupMessage,count,time){
         this.PopupMessage = PopupMessage
         this.PopupMessage.setClickListener(() => {
-            this.gamestart(PopupMessage);
+            this.gamestart(this.time);
         });
         this.score = 0;
+        this.timeSec = 0;
         this.timerF;
         
         this.gamestage = document.querySelector(".gamestage");
         this.startmsg = document.querySelector(".start");
         this.scoremsg = document.querySelector("#score");
         this.timer = document.querySelector("#timer");
+        
+        //버튼 이벤트
+        this.pauseBtn = document.querySelector("#pause");
+        this.pauseBtn.addEventListener('click',() => {
+            this.pauseGame();
+        });
+        this.pause = 0;
+
         this.StartBtn = document.querySelector("#start__btn");
         this.StartBtn.addEventListener('click', () => {
-            this.gamestart(this.PopupMessage);
+            this.gamestart(this.time);
         });
 
 
@@ -49,7 +58,8 @@ export default class Game{
         }
     }
 
-    gamestart() {
+    gamestart(t) {
+        this.score = 0;
         this.scoremsg.innerHTML = this.score;
         //start 창 안보이게
         this.startmsg.classList.add('hide');
@@ -59,14 +69,14 @@ export default class Game{
         this.drawImg("carrot", "img/carrot.png",this.count);
     
         // 타이머가 가게 할거고 0이되면 모든 동작 멈추고 GameOver 동작
-        let i = this.time;
-        this.timer.innerHTML = `0:${i}`;
-        i--;
+        this.timeSec = t;
+        this.timer.innerHTML = `0:${this.timeSec}`;
+        this.timeSec--;
         this.timerF = setInterval(()=>{
-            timer.innerHTML = `0:${i%60}`;
-            i--;    
+            timer.innerHTML = `0:${this.timeSec}`;
+            this.timeSec--;    
             // 타임아웃시?
-            if (i < 0) { 
+            if (this.timeSec < 0) { 
                 clearInterval(this.timerF); 
                 this.gameoverFunc();
             }
@@ -99,6 +109,26 @@ export default class Game{
             }
         });
     }
+
+    // 클릭 못하게 & 재시작 버튼
+    pauseGame(){
+        if (this.pause == 0) {
+            clearInterval(this.timerF); 
+            this.pause = 1;
+        } else if (this.pause == 1) {
+            this.timerF = setInterval(()=>{
+                timer.innerHTML = `0:${this.timeSec}`;
+                this.timeSec--;    
+                // 타임아웃시?
+                if (this.timeSec < 0) { 
+                    clearInterval(this.timerF); 
+                    this.gameoverFunc();
+                }
+            },1000);
+            this.pause = 0;
+        }
+    }
+    
     
 
     gameoverFunc() {
