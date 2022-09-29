@@ -1,5 +1,8 @@
 'use strict'
 
+// 타이머 관련 함수를 만들었으면 좋겠음
+// 여기도 JS 나눴으면 좋겠음
+// 
 export default class Game{
     constructor(PopupMessage,count,time){
         this.PopupMessage = PopupMessage
@@ -42,8 +45,8 @@ export default class Game{
         img.setAttribute('src', Spath);
     
         //2.이미지 배치
-        const Wmax = this.gamestage.clientWidth*0.93;
-        const Hmax = this.gamestage.clientHeight*0.75;   
+        const Wmax = this.gamestage.clientWidth*0.95;
+        const Hmax = this.gamestage.clientHeight*0.9;   
         const W = Math.random() * Wmax;
         const H = Math.random() * Hmax;
         img.style.transform = `translate(${W}px,${H}px)`;
@@ -65,8 +68,10 @@ export default class Game{
         this.startmsg.classList.add('hide');
     
         // 벌레 & 당근 추가
-        this.drawImg("bug", "img/bug.png",this.count);
-        this.drawImg("carrot", "img/carrot.png",this.count);
+        this.delImg();
+        this.drawImg("cherry", "img/cherry.png",this.count);
+        this.drawImg("enemy_1", "img/enemy_1.png",this.count/2);
+        this.drawImg("enemy_2", "img/enemy_2.png",this.count/2);
     
         // 타이머가 가게 할거고 0이되면 모든 동작 멈추고 GameOver 동작
         this.timeSec = t;
@@ -90,11 +95,11 @@ export default class Game{
     setScore(score) {
         document.addEventListener('click',(e)=>{
             if(e.target.tagName == 'IMG'){
-                if (e.target.className == 'bug') {
+                if (e.target.className == 'enemy_1' || e.target.className == 'enemy_2' ) {
                     this.score = 0;
                     clearInterval(this.timerF);        
                     this.gameoverFunc();        
-                } else if (e.target.className == 'carrot') {
+                } else if (e.target.className == 'cherry') {
                     e.target.classList.add('hide');
                     // carrot_audio.play();
                     ++this.score;
@@ -110,12 +115,15 @@ export default class Game{
         });
     }
 
-    // 클릭 못하게 & 재시작 버튼
+    // 일시정지
+    // 재시작 버튼으로 바꾸기
     pauseGame(){
         if (this.pause == 0) {
             clearInterval(this.timerF); 
             this.pause = 1;
+            this.gamestage.classList.add('disabled');
         } else if (this.pause == 1) {
+            this.gamestage.classList.remove('disabled');
             this.timerF = setInterval(()=>{
                 timer.innerHTML = `0:${this.timeSec}`;
                 this.timeSec--;    

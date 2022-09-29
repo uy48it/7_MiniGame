@@ -7,10 +7,15 @@
     <title>Mini game</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/1d84be454e.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
     <script type="module" src="./src/main.js" defer></script>
 </head>
 <body>
     <div class="game">
+        <div class="opening">
+            <button class="op_startBtn"> Game Start!</button>
+            <button class="op_explanation"> Description </button>
+        </div>
         <header class="state">
             <div class="state_item" id="score"> Score </div>
             <div class="state_item" id="timer"> Timer </div>
@@ -18,13 +23,14 @@
         </header>
         <div class="gamestage">
         </div>
-        <div class="start">
+        <div class="start hide">
             START <br>
             <button id="start__btn"><i class="fa-solid fa-play"></i></button> 
         </div>
         <div class="gamemsg hide">
             <span>GameOver</span> <br> RePlay? <br>
             <button id="restart__btn"><i class="fa-solid fa-reply"></i></button> 
+            <button id="end__btn"><i class="fa-solid fa-x"></i></button> 
         </div>
     </div>    
 </body>

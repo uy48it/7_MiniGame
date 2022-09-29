@@ -1,5 +1,10 @@
 * {
     margin: 0;
+    font-family: 'Bungee Spice', cursive;
+}
+
+.disabled {
+    pointer-events: none;
 }
 
 button {
@@ -18,18 +23,44 @@ body{
     height: 100vh;
 }
 
+img{
+    width: 60px;
+    height: 60px;
+}
+
 .game {
     position: relative;
     margin: auto;
     width: 1280px;
     height: 720px;
-    background: no-repeat url("img/background.png") center;
+    background: no-repeat url("img/back.jpg") center;
     background-size : 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     border-radius: 30px;
 }
+
+/* opening */
+.opening{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background:  linear-gradient(rgb(255, 240, 153), rgb(255, 138, 138));
+    border-radius: 30px;
+}
+
+.opening > button {
+    width: fit-content;
+    background-color: #ffffff;
+    margin: 15px auto;
+    font-size: 40px;
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
 
 /* header */
 header.state {
@@ -52,7 +83,7 @@ header.state {
 /* field */
 
 .gamestage {
-    height: 50%;
+    height: 90%;
 }
 
 .gamestage > img {
@@ -61,7 +92,7 @@ header.state {
 }
 
 .gamestage > img :hover{
-    transform:scale(1.2);
+    transform:scale(1.1);
 }
 
 
